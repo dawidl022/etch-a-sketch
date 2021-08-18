@@ -4,34 +4,7 @@
     <meta charset="utf-8">
     <link rel="shortcut icon" href="#">
     <title>Etch-a-sketch</title>
-    <style>
-      :root {
-        --squareSize: 50px;
-        --dimentions: 16;
-      }
-
-      #container {
-        border: 8px inset #ed0e0d;
-        display: grid;
-        grid-template-columns: repeat(var(--dimentions), var(--squareSize));
-        grid-template-rows: repeat(var(--dimentions), var(--squareSize));
-      }
-
-      #controls {
-        margin-left: 30px;
-        display: grid;
-        grid-template-rows:  1fr 1fr 1fr;
-        /* align-items: center; */
-        gap: 40px;
-      }
-
-
-
-      body {
-        display: grid;
-        grid-template-columns: auto 1fr;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div id="container"></div>

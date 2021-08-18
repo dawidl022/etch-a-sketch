@@ -1,8 +1,7 @@
 const div = document.getElementById("container");
-let dimentions = 20
+let dimensions = 20
 const root = document.documentElement
-root.style.setProperty("--dimentions", dimentions)
-root.style.setProperty("--squareSize", `${(window.innerHeight - 50) / dimentions}px`)
+root.style.setProperty("--dimensions", dimensions)
 let squareColor = "black"
 let hslCounter = 0
 let askGridSize = false
@@ -45,7 +44,7 @@ function resetColor(e) {
     hslCounter = 0
     changeColor = defaultChangeColor
     clearGrid()
-    drawGrid(dimentions)
+    drawGrid(dimensions)
   }
   squareColor = "black"
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`)
@@ -60,12 +59,11 @@ function changeSquareSize(e) {
     message.textContent = "Error: Invalid Value"
   } else {
     message.textContent = ""
-    dimentions = Number(targetValue)
-    root.style.setProperty("--dimentions", dimentions)
-    root.style.setProperty("--squareSize", `${(window.innerHeight - 50) / dimentions}px`)
-    drawGrid(dimentions)
+    dimensions = Number(targetValue)
+    root.style.setProperty("--dimensions", dimensions)
+    drawGrid(dimensions)
   }
-  pixelInput.setAttribute("placeholder", `Current: ${dimentions}`)
+  pixelInput.setAttribute("placeholder", `Current: ${dimensions}`)
   pixelInput.value = ""
 }
 
@@ -78,24 +76,13 @@ function drawGrid(dim) {
   }
 }
 
-
-// function genRbgColor() {
-//   let result = "#";
-//   const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
-//   for (let i = 0; i < 6; i++) {
-//     let choise = Math.floor(Math.random() * 16);
-//     result += digits[choise]
-//   } return result
-// }
-
-
 function rainbowColorInit() {
   changeColor = (e) => {
     e.target.style.backgroundColor = `hsl(${hslCounter % 360}, 100%, 50%)`
     hslCounter++
   }
   clearGrid()
-  drawGrid(dimentions)
+  drawGrid(dimensions)
   squareColor = "rainbow"
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`)
 }
@@ -109,10 +96,9 @@ function clearGridInit(e) {
     do {
       changeValue = prompt(message);
       if (changeValue >= 1 && changeValue <= 100) {
-        dimentions = Number(changeValue)
-        root.style.setProperty("--dimentions", dimentions)
-        root.style.setProperty("--squareSize", `${(window.innerHeight - 50) / dimentions}px`)
-        drawGrid(dimentions)
+        dimensions = Number(changeValue)
+        root.style.setProperty("--dimensions", dimensions)
+        drawGrid(dimensions)
         break;
       }
       message = "Invalid Value. Enter correct value or cancel.";
@@ -126,7 +112,7 @@ function toggleAsk(e) {
 }
 
 
-drawGrid(dimentions)
+drawGrid(dimensions)
 
 const clearBtn = document.querySelector("#clear")
 clearBtn.addEventListener("click", clearGridInit)
@@ -135,7 +121,7 @@ const pixelBtn = document.querySelector("#pixels-btn")
 pixelBtn.addEventListener("click", changeSquareSize)
 
 const pixelInput = document.querySelector("#pixels")
-pixelInput.setAttribute("placeholder", `Current: ${dimentions}`)
+pixelInput.setAttribute("placeholder", `Current: ${dimensions}`)
 
 const colorButton = document.querySelector("#color-btn")
 colorButton.addEventListener("click", changeSqaureColor)

@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --dimensions: 16;
+  --pad-border: 8px;
+  --pad-size: calc(100vmin - 2 * var(--body-margin) - 2 * var(--pad-border));
+  --body-margin: 1rem;
+}
+
+body {
+  margin: var(--body-margin);
+}
+
+#container {
+  border: var(--pad-border) inset #ed0e0d;
+  display: grid;
+  grid-template-columns: repeat(var(--dimensions), 1fr);
+  grid-template-rows: repeat(var(--dimensions), 1fr);
+  width: var(--pad-size);
+  height: var(--pad-size);
+}
+
+#controls {
+  margin-left: 30px;
+  display: grid;
+  grid-template-rows:  1fr 1fr 1fr;
+  /* align-items: center; */
+  gap: 40px;
+}
+
+
+
+body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
