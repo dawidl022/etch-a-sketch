@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- TODO move not scrolling into wrapper inside body -->
-<html class="not-scrolling">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +7,33 @@
     <title>Etch-a-sketch</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
-    <div id="container"></div>
-    <div id="controls">
-      <button id="clear">Clear</button>
-      <div id="pixel-ctrl">
-        <input id="pixels" type="text">
-        <button id="pixels-btn">Change pixel density</button>
-        <br>
-        <label for="ask">
-          <!-- autocomplete: "off" - makes sure that after refreshing page value is not saved -->
-          <input id = "ask"type="checkbox" autocomplete="off">Ask for new size when clearing grid
-        </label>
-        <p>Note: value must be between 1 and 100</p>
-        <p id="pixel-error"></p>
-      </div>
-      <div id="color-ctrl">
-        <input id="color" type="text">
-        <button id="color-btn">Change color</button>
-        <button id="rainbow">Rainbow</button>
-        <button id="color-reset">Reset</button>
-        <p>Note: accepts html color values (i.e. #00ff00, blue, black etc)</p>
-        <p id="color-error"></p>
+  <body class="not-scrolling">
+    <div class="outer-wrapper not-scrolling">
+      <div class="inner-wrapper">
+        <div id="container"></div>
+        <div id="controls">
+          <button id="clear">Clear</button>
+          <div class="mobile scroll-prompt">Scroll for more options</div>
+          <div id="pixel-ctrl">
+            <input id="pixels" type="text">
+            <button id="pixels-btn">Change pixel density</button>
+            <br>
+            <label for="ask">
+              <!-- autocomplete: "off" - makes sure that after refreshing page value is not saved -->
+              <input id = "ask"type="checkbox" autocomplete="off">Ask for new size when clearing grid
+            </label>
+            <p>Note: value must be between 1 and 100</p>
+            <p id="pixel-error"></p>
+          </div>
+          <div id="color-ctrl">
+            <input id="color" type="text">
+            <button id="color-btn">Change color</button>
+            <button id="rainbow">Rainbow</button>
+            <button id="color-reset">Reset</button>
+            <p>Note: accepts html color values (i.e. #00ff00, blue, black etc)</p>
+            <p id="color-error"></p>
+          </div>
+        </div>
       </div>
     </div>
     <script src="main.js"></script>

@@ -27,27 +27,47 @@ body {
   display: grid;
   grid-template-rows:  1fr 1fr 1fr;
   /* align-items: center; */
-  gap: 40px;
+  gap: 2rem;
 }
 
 
 
-body {
+.inner-wrapper {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 2rem;
 }
 
+.mobile {
+  display: none;
+}
 
+@media (orientation: portrait), (max-width: 650px) {
+  .inner-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
 @media (orientation: portrait) {
   :root {
     --body-margin: .6rem;
   }
 
-  body {
+  .inner-wrapper {
     grid-template-columns: 1fr;
   }
-  
+
+  #controls.with-prompt {
+    grid-template-rows:  1fr 1fr 1fr 1fr;
+  }
+
+  #controls #clear {
+    min-height: 5rem;
+  }
+
+  .mobile {
+    display: block;
+  }
+
   .not-scrolling {
     height: 85vh;
     overflow: hidden;

@@ -4,7 +4,12 @@ const div = document.getElementById("container");
 const root = document.documentElement;
 let dimensions = parseFloat(window.getComputedStyle(root)
     .getPropertyValue('--dimensions'));
-console.log(dimensions);
+const body = document.querySelector("body");
+const outerWrapper = document.querySelector(".outer-wrapper");
+const innerWrapper = document.querySelector(".inner-wrapper");
+const scrollPrompt = document.querySelector(".scroll-prompt")
+const hidableControls = document.querySelectorAll(".scroll-prompt ~ *")
+const controls = document.getElementById("controls")
 let squareColor = "black";
 let hslCounter = 0;
 let askGridSize = false;
@@ -60,7 +65,6 @@ function resetColor(e) {
 
 function changeSquareSize() {
   const targetValue = pixelInput.value;
-  console.log(targetValue);
   const message = document.querySelector("#pixel-error");
   if (! (targetValue >= 1 && targetValue <= 100)) {
     message.textContent = "Error: Invalid Value";
@@ -93,6 +97,7 @@ function rainbowColorInit() {
   }
   clearGrid();
   drawGrid(dimensions);
+  initTouchScreen();
   squareColor = "rainbow";
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 }
@@ -151,7 +156,7 @@ RainbowButton.addEventListener("click", rainbowColorInit);
 const askCheckbox = document.querySelector("#ask");
 askCheckbox.addEventListener("input", toggleAsk);
 
-// TODO change this on screen resize
+// change this on screen and pixel density resize
 let rectStart;
 let rectActualSize;
 let squareActualSize;
@@ -174,18 +179,43 @@ function initTouchScreen() {
 }
 
 initTouchScreen();
-window.addEventListener("resize", initTouchScreen)
+window.addEventListener("resize", () => {
+  initTouchScreen();
+  initScrollPrompt();
+})
 
 
 document.addEventListener("touchstart", e => {
   if (div.contains(e.target)) {
-    root.classList.add("not-scrolling");
-    document.querySelector("body").classList.add("not-scrolling");
+    body.classList.add("not-scrolling");
+    outerWrapper.classList.add("not-scrolling");
+    controls.classList.add("with-prompt");
+    scrollPrompt.style.display = "block";
+    hidableControls.forEach(control => control.style.display = "none");
   } else {
-    root.classList.remove("not-scrolling")
-    document.querySelector("body").classList.remove("not-scrolling");
+    body.classList.remove("not-scrolling")
+    outerWrapper.classList.remove("not-scrolling");
+    controls.classList.remove("with-prompt");
+    scrollPrompt.style.display = "none";
+    hidableControls.forEach(control => control.style.display = "block");
   }
 });
+
+function initScrollPrompt() {
+  scrollPrompt.style.display = "none";
+  if (window.innerHeight > window.innerWidth && 
+      parseFloat(window.getComputedStyle(innerWrapper).height)
+      > parseFloat(window.getComputedStyle(outerWrapper).height)) {
+    scrollPrompt.style.display = "block";
+    controls.classList.add("with-prompt");
+    hidableControls.forEach(control => control.style.display = "none");
+  } else {
+    controls.classList.remove("with-prompt");
+    hidableControls.forEach(control => control.style.display = "block");
+  }
+}
+
+initScrollPrompt();
 
 document.addEventListener("touchmove", (e) => {
   const touchX = e.touches[0].clientX;
@@ -195,6 +225,10 @@ document.addEventListener("touchmove", (e) => {
   if (indexX >= dimensions || indexY >= dimensions) {
     return;
   }
-  changeColor(e, matrix[indexY][indexX])
-  // console.log(e.touches[0].clientY);
+  if (outerWrapper.className.includes("not-scrolling")) {
+    console.log(changeColor)
+    console.log(matrix)
+    console.log(matrix[indexY][indexX])
+    changeColor(e, matrix[indexY][indexX])
+  }
 })
