@@ -1,16 +1,23 @@
-const div = document.getElementById("container");
-let dimensions = 20
-const root = document.documentElement
-root.style.setProperty("--dimensions", dimensions)
-let squareColor = "black"
-let hslCounter = 0
-let askGridSize = false
+"use strict";
 
-const defaultChangeColor = (e) => {
-  e.target.style.backgroundColor = squareColor;
+const div = document.getElementById("container");
+const root = document.documentElement;
+let dimensions = parseFloat(window.getComputedStyle(root)
+    .getPropertyValue('--dimensions'));
+console.log(dimensions);
+let squareColor = "black";
+let hslCounter = 0;
+let askGridSize = false;
+
+
+const defaultChangeColor = (e, target) => {
+  if (!target) {
+    target = e.target;
+  }
+  target.style.backgroundColor = squareColor;
 }
 
-let changeColor = defaultChangeColor
+let changeColor = defaultChangeColor;
 
 function isColor(strColor) {
   const test = document.createElement("div");
@@ -19,52 +26,52 @@ function isColor(strColor) {
 }
 
 function changeSqaureColor(e) {
-  const message = document.querySelector("#color-error")
-  const targetColor = colorInput.value
+  const message = document.querySelector("#color-error");
+  const targetColor = colorInput.value;
   if (isColor(targetColor)) {
-    changeColor = defaultChangeColor
-    squareColor = targetColor
-    colorInput.setAttribute("placeholder", `Current: ${squareColor}`)
-    message.textContent = ""
+    changeColor = defaultChangeColor;
+    squareColor = targetColor;
+    colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
+    message.textContent = "";
   } else {
-    message.textContent = "Error: Invalid HTML color"
+    message.textContent = "Error: Invalid HTML color";
   }
-  colorInput.value = ""
+  colorInput.value = "";
 }
 
 function clearGrid(e) {
   const squares = Array.from(div.children);
-  squares.forEach(square => square.style.backgroundColor = "white")
+  squares.forEach(square => square.style.backgroundColor = "white");
 }
 
 function resetColor(e) {
-  const message = document.querySelector("#color-error")
-  message.textContent = ""
+  const message = document.querySelector("#color-error");
+  message.textContent = "";
   if (squareColor == "rainbow") {
-    hslCounter = 0
-    changeColor = defaultChangeColor
-    clearGrid()
-    drawGrid(dimensions)
+    hslCounter = 0;
+    changeColor = defaultChangeColor;
+    clearGrid();
+    drawGrid(dimensions);
   }
   squareColor = "black"
-  colorInput.setAttribute("placeholder", `Current: ${squareColor}`)
+  colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 }
 
 
-function changeSquareSize(e) {
+function changeSquareSize() {
   const targetValue = pixelInput.value;
   console.log(targetValue);
-  const message = document.querySelector("#pixel-error")
+  const message = document.querySelector("#pixel-error");
   if (! (targetValue >= 1 && targetValue <= 100)) {
-    message.textContent = "Error: Invalid Value"
+    message.textContent = "Error: Invalid Value";
   } else {
-    message.textContent = ""
-    dimensions = Number(targetValue)
-    root.style.setProperty("--dimensions", dimensions)
-    drawGrid(dimensions)
+    message.textContent = "";
+    dimensions = Number(targetValue);
+    root.style.setProperty("--dimensions", dimensions);
+    drawGrid(dimensions);
   }
-  pixelInput.setAttribute("placeholder", `Current: ${dimensions}`)
-  pixelInput.value = ""
+  pixelInput.setAttribute("placeholder", `Current: ${dimensions}`);
+  pixelInput.value = "";
 }
 
 function drawGrid(dim) {
@@ -77,14 +84,17 @@ function drawGrid(dim) {
 }
 
 function rainbowColorInit() {
-  changeColor = (e) => {
-    e.target.style.backgroundColor = `hsl(${hslCounter % 360}, 100%, 50%)`
-    hslCounter++
+  changeColor = (e, target) => {
+    if (!target) {
+      target = e.target;
+    }
+    target.style.backgroundColor = `hsl(${hslCounter % 360}, 100%, 50%)`;
+    hslCounter++;
   }
-  clearGrid()
-  drawGrid(dimensions)
-  squareColor = "rainbow"
-  colorInput.setAttribute("placeholder", `Current: ${squareColor}`)
+  clearGrid();
+  drawGrid(dimensions);
+  squareColor = "rainbow";
+  colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 }
 
 
@@ -92,13 +102,13 @@ function clearGridInit(e) {
   clearGrid(e)
   if (askGridSize) {
     let message = "Change grid size?";
-    let changeValue
+    let changeValue;
     do {
       changeValue = prompt(message);
       if (changeValue >= 1 && changeValue <= 100) {
-        dimensions = Number(changeValue)
-        root.style.setProperty("--dimensions", dimensions)
-        drawGrid(dimensions)
+        dimensions = Number(changeValue);
+        root.style.setProperty("--dimensions", dimensions);
+        drawGrid(dimensions);
         break;
       }
       message = "Invalid Value. Enter correct value or cancel.";
@@ -107,33 +117,84 @@ function clearGridInit(e) {
 }
 
 function toggleAsk(e) {
-  if (askGridSize) askGridSize = false
-  else askGridSize = true
+  if (askGridSize) askGridSize = false;
+  else askGridSize = true;
 }
 
 
-drawGrid(dimensions)
+drawGrid(dimensions);
 
-const clearBtn = document.querySelector("#clear")
-clearBtn.addEventListener("click", clearGridInit)
+const clearBtn = document.querySelector("#clear");
+clearBtn.addEventListener("click", clearGridInit);
 
-const pixelBtn = document.querySelector("#pixels-btn")
-pixelBtn.addEventListener("click", changeSquareSize)
+const pixelBtn = document.querySelector("#pixels-btn");
+pixelBtn.addEventListener("click", () => {
+  changeSquareSize();
+  initTouchScreen();
+});
 
-const pixelInput = document.querySelector("#pixels")
-pixelInput.setAttribute("placeholder", `Current: ${dimensions}`)
+const pixelInput = document.querySelector("#pixels");
+pixelInput.setAttribute("placeholder", `Current: ${dimensions}`);
 
-const colorButton = document.querySelector("#color-btn")
-colorButton.addEventListener("click", changeSqaureColor)
+const colorButton = document.querySelector("#color-btn");
+colorButton.addEventListener("click", changeSqaureColor);
 
-const colorInput = document.querySelector("#color")
-colorInput.setAttribute("placeholder", `Current: ${squareColor}`)
+const colorInput = document.querySelector("#color");
+colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 
-const resetColorButton = document.querySelector("#color-reset")
-resetColorButton.addEventListener("click", resetColor)
+const resetColorButton = document.querySelector("#color-reset");
+resetColorButton.addEventListener("click", resetColor);
 
-const RainbowButton = document.querySelector("#rainbow")
-RainbowButton.addEventListener("click", rainbowColorInit)
+const RainbowButton = document.querySelector("#rainbow");
+RainbowButton.addEventListener("click", rainbowColorInit);
 
-const askCheckbox = document.querySelector("#ask")
+const askCheckbox = document.querySelector("#ask");
 askCheckbox.addEventListener("input", toggleAsk);
+
+// TODO change this on screen resize
+let rectStart;
+let rectActualSize;
+let squareActualSize;
+let matrix;
+
+function initTouchScreen() {
+  const rect = div.getBoundingClientRect();
+  rectStart = rect.left;
+  rectActualSize = rect.right - rect.left;
+  squareActualSize = rectActualSize / dimensions
+  
+  let squares = Array.from(div.children);
+  
+  matrix = [];
+  for (let i = 0; i < dimensions; i++) {
+    const start = i * dimensions;
+    const row = squares.slice(start, start + dimensions);
+    matrix.push(row);
+  }
+}
+
+initTouchScreen();
+window.addEventListener("resize", initTouchScreen)
+
+
+document.addEventListener("touchstart", e => {
+  if (div.contains(e.target)) {
+    root.classList.add("not-scrolling");
+    document.querySelector("body").classList.add("not-scrolling");
+  } else {
+    root.classList.remove("not-scrolling")
+    document.querySelector("body").classList.remove("not-scrolling");
+  }
+});
+
+document.addEventListener("touchmove", (e) => {
+  const touchX = e.touches[0].clientX;
+  const indexX = Math.floor((touchX - rectStart) / squareActualSize);
+  const touchY = e.touches[0].clientY;
+  const indexY = Math.floor((touchY - rectStart) / squareActualSize);
+  if (indexX >= dimensions || indexY >= dimensions) {
+    return;
+  }
+  changeColor(e, matrix[indexY][indexX])
+  // console.log(e.touches[0].clientY);
+})

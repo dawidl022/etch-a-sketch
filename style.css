@@ -24,7 +24,6 @@ body {
 }
 
 #controls {
-  margin-left: 30px;
   display: grid;
   grid-template-rows:  1fr 1fr 1fr;
   /* align-items: center; */
@@ -36,4 +35,21 @@ body {
 body {
   display: grid;
   grid-template-columns: auto 1fr;
+  gap: 2rem;
+}
+
+
+@media (orientation: portrait) {
+  :root {
+    --body-margin: .6rem;
+  }
+
+  body {
+    grid-template-columns: 1fr;
+  }
+  
+  .not-scrolling {
+    height: 85vh;
+    overflow: hidden;
+  }
 }
