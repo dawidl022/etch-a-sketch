@@ -12,6 +12,10 @@ input[type="text"], input[type="number"], input[type="color"], button {
   padding: .2em;
 }
 
+input[type="text"], input[type="number"] {
+  max-width: 50vw;
+}
+
 button {
   text-align: center;
   border: calc(var(--pad-border) / 2) outset var(--pad-color);
