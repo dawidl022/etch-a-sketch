@@ -3,19 +3,85 @@
   padding: 0;
 }
 
+input[type="text"], input[type="number"], input[type="color"], button {
+  all: unset;
+  font-weight: bold;
+  padding: .2em;
+}
+
+button {
+  text-align: center;
+  border: calc(var(--pad-border) / 2) outset var(--pad-color);
+  background-color: var(--pad-color);
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.field {
+  display: grid;
+  gap: .4rem;
+  grid-template-columns: 1fr auto;
+}
+
+.sub-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+input[type="text"],input[type="number"] {
+  border-bottom: calc(var(--pad-border) / 2) outset var(--pad-color);
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+  border-bottom-style: inset;
+}
+
+input[type="color"] {
+  width: 2rem;
+}
+
+button:hover {
+  --pad-color: #fe1f1e;
+}
+
+button:active {
+  border-style: inset;
+}
+
+.ask-label {
+  display: flex;
+  align-items: center;
+  margin: .4em 0;
+}
+
+.ask-label  input {
+  margin-right: .4em;
+}
+
+p {
+  margin: .4em 0;
+}
+
+/* TODO bravely make own checkbox */
+
 :root {
   --dimensions: 16;
   --pad-border: 8px;
   --pad-size: calc(100vmin - 2 * var(--body-margin) - 2 * var(--pad-border));
   --body-margin: 1rem;
+  --pad-color: #ed0e0d;
 }
 
 body {
   margin: var(--body-margin);
+  font-family: sans-serif;
 }
 
 #container {
-  border: var(--pad-border) inset #ed0e0d;
+  border: var(--pad-border) inset var(--pad-color);
   display: grid;
   grid-template-columns: repeat(var(--dimensions), 1fr);
   grid-template-rows: repeat(var(--dimensions), 1fr);
@@ -30,6 +96,9 @@ body {
   gap: 2rem;
 }
 
+#clear {
+  border-width: var(--pad-border);
+}
 
 
 .inner-wrapper {
@@ -56,8 +125,12 @@ body {
     grid-template-columns: 1fr;
   }
 
+  #controls {
+    grid-template-rows: auto 1fr 1fr;
+  }
+
   #controls.with-prompt {
-    grid-template-rows:  1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr 1fr 1fr;
   }
 
   #controls #clear {
@@ -69,7 +142,15 @@ body {
   }
 
   .not-scrolling {
-    height: 85vh;
+    height: 86vh;
     overflow: hidden;
+  }
+
+  .scroll-prompt {
+    text-align: center;
+    color: #dc0d0c;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 1.2rem;
   }
 }

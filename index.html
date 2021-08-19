@@ -13,23 +13,29 @@
         <div id="container"></div>
         <div id="controls">
           <button id="clear">Clear</button>
-          <div class="mobile scroll-prompt">Scroll for more options</div>
+          <div class="mobile scroll-prompt">Scroll for more options ▼</div>
           <div id="pixel-ctrl">
-            <input id="pixels" type="text">
-            <button id="pixels-btn">Change pixel density</button>
-            <br>
-            <label for="ask">
+            <div class="field">
+              <input id="pixels" type="number" min=1 max=100>
+              <button id="pixels-btn">Change pixel density</button>
+            </div>
+            <label for="ask" class="ask-label">
               <!-- autocomplete: "off" - makes sure that after refreshing page value is not saved -->
-              <input id = "ask"type="checkbox" autocomplete="off">Ask for new size when clearing grid
+              <input id = "ask" type="checkbox" autocomplete="off">Ask for new size when clearing grid
             </label>
             <p>Note: value must be between 1 and 100</p>
             <p id="pixel-error"></p>
           </div>
           <div id="color-ctrl">
-            <input id="color" type="text">
-            <button id="color-btn">Change color</button>
-            <button id="rainbow">Rainbow</button>
-            <button id="color-reset">Reset</button>
+            <div class="field">
+              <div class="sub-field">
+                <input id="color" type="text">
+                <input id="color-picker" type="color">
+              </div>
+              <button id="color-btn">Change color</button>
+              <button id="rainbow">Rainbow</button>
+              <button id="color-reset">Reset</button>
+            </div>
             <p>Note: accepts html color values (i.e. #00ff00, blue, black etc)</p>
             <p id="color-error"></p>
           </div>
