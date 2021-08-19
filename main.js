@@ -159,14 +159,15 @@ function clearGridInit(e) {
     let message = "Change grid size?";
     let changeValue;
     do {
-      changeValue = prompt(message);
+      changeValue = parseInt(prompt(message));
       if (changeValue >= 1 && changeValue <= 100) {
         dimensions = Number(changeValue);
+        pixelInput.setAttribute("placeholder", `Current: ${dimensions}`);
         root.style.setProperty("--dimensions", dimensions);
         drawGrid(dimensions);
         break;
       }
-      message = "Invalid Value. Enter correct value or cancel.";
+      message = "Invalid Value. Enter integer value between 1 and 100 or cancel.";
     } while (changeValue);
   }
 }
