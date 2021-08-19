@@ -121,6 +121,7 @@ function resetColor(e) {
 
 function changeSquareSize() {
   const targetValue = pixelInput.value;
+  console.log(targetValue)
   const message = document.querySelector("#pixel-error");
   if (! (targetValue >= 1 && targetValue <= 100)) {
     message.textContent = "Error: Invalid Value";
@@ -181,17 +182,23 @@ drawGrid(dimensions);
 const clearBtn = document.querySelector("#clear");
 clearBtn.addEventListener("click", clearGridInit);
 
-const pixelBtn = document.querySelector("#pixels-btn");
-pixelBtn.addEventListener("click", () => {
+const pixelForm = document.querySelector("#pixel-form");
+pixelForm.addEventListener("submit", e => {
+  e.preventDefault();
   changeSquareSize();
   initTouchScreen();
-});
+})
 
 const pixelInput = document.querySelector("#pixels");
 pixelInput.setAttribute("placeholder", `Current: ${dimensions}`);
 
 const colorButton = document.querySelector("#color-btn");
 colorButton.addEventListener("click", changeSquareColor);
+const colorForm = document.querySelector("#color-form");
+colorForm.addEventListener("submit", e => {
+  e.preventDefault();
+  changeSquareColor();
+})
 
 const colorInput = document.querySelector("#color");
 const colorPicker = document.querySelector("#color-picker");

@@ -15,10 +15,10 @@
           <button id="clear">Clear</button>
           <div class="mobile scroll-prompt">Scroll for more options ▼</div>
           <div id="pixel-ctrl">
-            <div class="field">
+            <form class="field" id="pixel-form">
               <input id="pixels" type="number" min=1 max=100>
-              <button id="pixels-btn">Change pixel density</button>
-            </div>
+              <button>Change pixel density</button>
+            </form>
             <label for="ask" class="ask-label">
               <!-- autocomplete: "off" - makes sure that after refreshing page value is not saved -->
               <input id = "ask" type="checkbox" autocomplete="off">Ask for new size when clearing grid
@@ -28,10 +28,10 @@
           </div>
           <div id="color-ctrl">
             <div class="field">
-              <div class="sub-field">
+              <form class="sub-field" id="color-form">
                 <input id="color" type="text">
                 <div class="icon-wrapper"><input id="color-picker" type="color"></div>
-              </div>
+              </form>
               <button id="color-btn">Change color</button>
               <button id="rainbow">Rainbow</button>
               <button id="color-reset">Reset</button>
