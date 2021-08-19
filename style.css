@@ -154,13 +154,8 @@ body {
 }
 
 @media (orientation: portrait), (max-width: 650px) {
-  .inner-wrapper {
-    grid-template-columns: 1fr;
-  }
-}
-@media (orientation: portrait) {
-  :root {
-    --body-margin: .6rem;
+  #controls #clear {
+    min-height: 5rem;
   }
 
   .inner-wrapper {
@@ -175,8 +170,12 @@ body {
     grid-template-rows: auto 1fr 1fr 1fr;
   }
 
-  #controls #clear {
-    min-height: 5rem;
+  :root {
+    --body-margin: .6rem;
+  }
+
+  .inner-wrapper {
+    grid-template-columns: 1fr;
   }
 
   .mobile {
