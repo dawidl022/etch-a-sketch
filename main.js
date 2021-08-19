@@ -14,32 +14,64 @@ let squareColor = "black";
 let hslCounter = 0;
 let askGridSize = false;
 
+function decToHex(number) {
+  let hexNumber = number.toString(16);
+  return hexNumber.length == 1 ? "0" + hexNumber : hexNumber;
+}
 
-const defaultChangeColor = (e, target) => {
+function rgbToHex(rgb) {
+  let hex = Array.from(rgb).map(value => decToHex(Number(value)));
+  return "#" + hex.join("");
+}
+
+function colorToRGB(color) {
+  var cvs, ctx;
+  cvs = document.createElement('canvas');
+  cvs.height = 1;
+  cvs.width = 1;
+  ctx = cvs.getContext('2d');
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, 1, 1);
+  return ctx.getImageData(0, 0, 1, 1).data.slice(0, 3);
+}
+
+function colorToHex(color) {
+  return rgbToHex(colorToRGB(color));
+}
+
+const changeColor = (e, target) => {
   if (!target) {
     target = e.target;
   }
-  target.style.backgroundColor = squareColor;
+  if (squareColor === "rainbow") {
+    target.style.backgroundColor = `hsl(${hslCounter % 360}, 100%, 50%)`;
+    hslCounter++;
+  } else {
+    target.style.backgroundColor = squareColor;
+  }
 }
 
-let changeColor = defaultChangeColor;
 
 function isColor(strColor) {
   const test = document.createElement("div");
   test.style.backgroundColor = strColor;
-  return test.style.backgroundColor == strColor;
+  return colorToHex(test.style.backgroundColor) == colorToHex(strColor);
 }
 
-function changeSqaureColor(e) {
+function changeSquareColor(e) {
   const message = document.querySelector("#color-error");
-  const targetColor = colorInput.value;
+  const targetColor = colorInput.value.toLowerCase();
+  const hexColor = colorToHex(targetColor);
+  colorPicker.value = hexColor;
   if (isColor(targetColor)) {
-    changeColor = defaultChangeColor;
     squareColor = targetColor;
     colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
     message.textContent = "";
   } else {
     message.textContent = "Error: Invalid HTML color";
+  }
+  if (targetColor === "") {
+    colorInput.setAttribute("placeholder", `Easter-egg: eraser`);
   }
   colorInput.value = "";
 }
@@ -52,13 +84,11 @@ function clearGrid(e) {
 function resetColor(e) {
   const message = document.querySelector("#color-error");
   message.textContent = "";
-  if (squareColor == "rainbow") {
+  if (squareColor === "rainbow") {
     hslCounter = 0;
-    changeColor = defaultChangeColor;
-    clearGrid();
-    drawGrid(dimensions);
   }
-  squareColor = "black"
+  squareColor = "black";
+  colorPicker.value = "";
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 }
 
@@ -88,16 +118,6 @@ function drawGrid(dim) {
 }
 
 function rainbowColorInit() {
-  changeColor = (e, target) => {
-    if (!target) {
-      target = e.target;
-    }
-    target.style.backgroundColor = `hsl(${hslCounter % 360}, 100%, 50%)`;
-    hslCounter++;
-  }
-  clearGrid();
-  drawGrid(dimensions);
-  initTouchScreen();
   squareColor = "rainbow";
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 }
@@ -142,9 +162,15 @@ const pixelInput = document.querySelector("#pixels");
 pixelInput.setAttribute("placeholder", `Current: ${dimensions}`);
 
 const colorButton = document.querySelector("#color-btn");
-colorButton.addEventListener("click", changeSqaureColor);
+colorButton.addEventListener("click", changeSquareColor);
 
 const colorInput = document.querySelector("#color");
+const colorPicker = document.querySelector("#color-picker");
+colorPicker.value = colorToHex(squareColor)
+colorPicker.addEventListener("change", function() {
+  squareColor = this.value;
+  colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
+})
 colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 
 const resetColorButton = document.querySelector("#color-reset");
@@ -226,9 +252,6 @@ document.addEventListener("touchmove", (e) => {
     return;
   }
   if (outerWrapper.className.includes("not-scrolling")) {
-    console.log(changeColor)
-    console.log(matrix)
-    console.log(matrix[indexY][indexX])
     changeColor(e, matrix[indexY][indexX])
   }
 })

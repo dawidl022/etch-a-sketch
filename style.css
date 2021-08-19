@@ -96,6 +96,7 @@ body {
   gap: 2rem;
 }
 
+/* TODO increase font size */
 #clear {
   border-width: var(--pad-border);
 }
