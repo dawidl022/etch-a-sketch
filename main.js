@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO refactor repeating code
+
 const div = document.getElementById("container");
 const root = document.documentElement;
 let dimensions = parseFloat(window.getComputedStyle(root)
@@ -13,6 +15,21 @@ const controls = document.getElementById("controls")
 let squareColor = "black";
 let hslCounter = 0;
 let askGridSize = false;
+
+// Add icons for rainbow and eraser
+const iconWrapper = document.querySelector(".icon-wrapper")
+const rainbowIcon = document.createElement("div");
+rainbowIcon.classList.add("icon");
+rainbowIcon.classList.add("rainbow-icon");
+rainbowIcon.style.display = "none";
+iconWrapper.append(rainbowIcon);
+
+const eraserIcon = document.createElement("div");
+eraserIcon.classList.add("icon");
+eraserIcon.classList.add("eraser-icon");
+eraserIcon.style.display = "none";
+iconWrapper.append(eraserIcon);
+
 
 function decToHex(number) {
   let hexNumber = number.toString(16);
@@ -66,12 +83,18 @@ function changeSquareColor(e) {
   if (isColor(targetColor)) {
     squareColor = targetColor;
     colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
+    rainbowIcon.style.display = "none";
+    eraserIcon.style.display = "none";
+    colorPicker.style.opacity = "1";
     message.textContent = "";
   } else {
     message.textContent = "Error: Invalid HTML color";
   }
   if (targetColor === "") {
     colorInput.setAttribute("placeholder", `Easter-egg: eraser`);
+    eraserIcon.style.display = "block";
+    rainbowIcon.style.display = "none"
+    colorPicker.style.opacity = "0";
   }
   colorInput.value = "";
 }
@@ -88,6 +111,9 @@ function resetColor(e) {
     hslCounter = 0;
   }
   squareColor = "black";
+  rainbowIcon.style.display = "none";
+  eraserIcon.style.display = "none";
+  colorPicker.style.opacity = "1";
   colorPicker.value = "";
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 }
@@ -120,6 +146,9 @@ function drawGrid(dim) {
 function rainbowColorInit() {
   squareColor = "rainbow";
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
+  colorPicker.style.opacity = "0";
+  eraserIcon.style.display = "none";
+  rainbowIcon.style.display = "block";
 }
 
 
@@ -170,6 +199,8 @@ colorPicker.value = colorToHex(squareColor)
 colorPicker.addEventListener("change", function() {
   squareColor = this.value;
   colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
+  rainbowIcon.style.display = "none";
+  colorPicker.style.opacity = "1";
 })
 colorInput.setAttribute("placeholder", `Current: ${squareColor}`);
 

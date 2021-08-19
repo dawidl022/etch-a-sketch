@@ -1,3 +1,6 @@
+/* TODO organise CSS */
+
+
 * {
   margin: 0;
   padding: 0;
@@ -39,8 +42,46 @@ input[type="text"]:focus, input[type="number"]:focus {
   border-bottom-style: inset;
 }
 
+input[type="color"], .icon {
+  width: 2.5rem;
+  height: 100%;
+  box-sizing: border-box;
+  position: absolute;
+}
+
 input[type="color"] {
+  z-index: 1;
+}
+
+.icon {
   width: 2rem;
+  margin: .2em;
+  height: calc(100% - .4em);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.rainbow-icon {
+  background: linear-gradient(90deg,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%)
+  );
+}
+
+.eraser-icon {
+  background-image: url(images/eraser-svgrepo-com.svg);
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.icon-wrapper {
+  width: 2.5rem;
+  height: 100%;
+  position: relative;
 }
 
 button:hover {
